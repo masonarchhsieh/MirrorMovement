@@ -1,0 +1,14 @@
+{
+  "name": "smart-mirror",
+  "version": "1.0.0",
+  "description": "HCI project: Smart Mirror with Motion Correlation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
