@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html> 
+    <head> 
+        <meta charset="utf-8">
+        <title> Move circle in circular path </title>
+        <script type="text/javascript" src="javascript/creative.js"> </script>
+    </head>
+    
+    <body class='body'>
+
+        <script >
+var ctx = createCanvas("canvas1");
+//var canvas = document.getElementById('canvas1');
+//var ctx = canvas.getContext('2d');
+
+var number_of_balls = 1;
+var balls = [];
+// radius of our circle
+var radius = 200;
+
+for (var i = 0; i < number_of_balls; i++) {
+    addBall();
+}
+
+function addBall(){
+    var ball = {
+        x: 0,
+        y: 0,
+        speed: random(1),
+        size: random(10, 50),
+        colour: rgb(0),
+        angle: random(360) 
+    }
+    balls.push(ball);
+}
+
+function draw() {
+    ctx.background(245, 1);
+    moveBall();
+    drawBall();
+}
+
+function moveBall(){
+    for (var i = 0; i < balls.length; i++) {
+        var b = balls[i];
+        // move the angle to rotate the balls
+        b.angle += b.speed;
+        // plot the balls x to cos and y to sin 
+        b.x = w/2 + Math.cos(radians(b.angle))*radius;
+        b.y = h/2 + Math.sin(radians(b.angle))*radius;
+    }
+}
+
+function drawBall(){
+    ctx.beginPath();
+    ctx.arc(w/2, h/2, 200, 0, 2 * Math.PI);
+    ctx.stroke();
+
+    for (var i = 0; i < balls.length; i++) {
+        var b = balls[i];
+        ctx.fillStyle = b.colour;
+        ctx.fillEllipse(b.x, b.y, b.size);
+
+    }
+}
+
+function getPositionXY(ball) {
+    // call ball.x && ball.y
+    return ball;
+}
+
+        </script>
+    </body>
+
+</html>

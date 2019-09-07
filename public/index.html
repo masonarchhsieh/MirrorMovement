@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Smart Mirror </title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/player.css">
+        <link rel="stylesheet" href="css/camera.css">
+        <script type="text/javascript" src="javascript/creative.js"> </script>
+        <script type="text/javascript" src="javascript/main.js"> </script>
+        <script type="text/javascript" src="javascript/pearson.js"> </script>
+
+    </head>
+    
+
+    <body onload="Init()">
+        <div id="weather">
+            <div id="openweathermap-widget-15"></div>
+        </div>
+
+        <div id="clock" class="clock">
+            Time
+        </div>
+        
+        <div id="app-bar" class="apps">
+            <div id="glasses-div" onclick="SlideDownWindow(0)"> 
+            </div>
+            <div id="media-div" onclick="SlideDownWindow(1)">
+            </div>
+            <div id="screenshot-div" onclick="SlideDownWindow(2)">
+            </div>
+            <div id="dropDownWindow">       
+            </div>
+        </div>
+
+        <script type="text/javascript" src="javascript/motion.js"> </script>
+        <script type="text/javascript" src="javascript/player.js"> </script>
+
+        <!-- Scripts for virtual glass fitting -->
+        <!-- jquery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <!-- three.js r54 -->
+        <script type="text/javascript" src="javascript/three.js"></script>
+        <!-- clmtrack -->
+        <script type="text/javascript" src="javascript/utils.js"></script>
+        <script type="text/javascript" src="javascript/clmtrackr.js"></script>
+        <script type="text/javascript" src="javascript/camera.js"> </script>
+    </body>
+
+</html>

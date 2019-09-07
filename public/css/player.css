@@ -1,0 +1,26 @@
+/* This is the css file for media player */
+#songCover {
+    position: relative;
+    top: 10px;
+    left: 100px;
+    float: left;
+}
+
+
+#mediaPlayer {
+    position: relative;
+    top: 10px;
+    left: 60px;
+}
+
+#play-bar {
+    position: relative;
+    top: 15px;
+}
+
+.play-but {
+    position: relative;
+    left: 50px;
+}
+
+
