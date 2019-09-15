@@ -1,19 +1,12 @@
 var menu_status = 0;
 function Init() {
-    UpdateWeather();
+    //UpdateWeather();
     UpdateTime();
-    setInterval('UpdateTime()', 1000);
-    setInterval('UpdateWeather()', 60000);
+    setInterval('UpdateSec()', 1000);
+    //setInterval('UpdateWeather()', 60000);
 }
 
 function UpdateWeather() {
-    var weather
-    fetch('weather').then(res => res.text()).then(json => { 
-        weather = json;
-        console.log(weather);
-        // document.getElementById('weather').innerHTML = weather;
-    });
-
     window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  
     window.myWidgetParam.push({id: 15,cityid: '2158177', appid: 'ee054b9b6e341cb14685f01e6774ce31', units: 'metric', containerid: 'openweathermap-widget-15', }); 
     (function() {
@@ -47,12 +40,67 @@ function UpdateTime() {
     currenthours = ( currenthours == 0 ) ? 12 : currenthours;
 
     var dayString = Day2Day(currenttime.getDay());
+    var curYear = currenttime.getYear() + 1900;
     var monthString = Month2Month(currenttime.getMonth());
-    var currenttimestring = currenthours + ":" + currentminutes + ":" + currentseconds + " " + timeofday;
-    time.innerHTML = currenttimestring + '<br>' + dayString + '<br>' + currenttime.getDate() + ' ' + monthString;
+    UpdateHRStyle(currenthours);
+    document.getElementById('clockdate').innerHTML = dayString + ', ' + monthString + ' ' + currenttime.getDate() + ', ' + curYear;
+    document.getElementById('clockHrMin').innerHTML = currenthours + ':' + currentminutes;
+    document.getElementById('clockSec').innerHTML = currentseconds;
+    document.getElementById('clockAP').innerHTML = timeofday;
+
+}
+
+function UpdateSec() {
+    var currenttime = new Date();
+    currentseconds = currenttime.getSeconds();
+    
+    currentseconds = ( currentseconds < 10 ? "0" : "" ) + currentseconds;
+    document.getElementById('clockSec').innerHTML = currentseconds;
+    
+    if (Number(currentseconds) == 0) {
+        UpdateMin();
+    }
+}
+
+function UpdateMin() {
+    var currenttime = new Date();
+    currentminutes = currenttime.getMinutes();
+    currentminutes = ( currentminutes < 10 ? "0" : "" ) + currentminutes;
+    
+    if (Number(currentminutes) == 0) {
+        currenthours = currenttime.getHours();
+        timeofday = ( currenthours < 12 ) ? "am" : "pm";
+        currenthours = ( currenthours > 12 ) ? currenthours - 12 : currenthours;
+        currenthours = ( currenthours == 0 ) ? 12 : currenthours;
+        document.getElementById('clockAP').innerHTML = timeofday;
+
+        if (Number(currenthours) == 0) {
+            UpdateDate();
+        }
+    }
+
+    UpdateHRStyle(currenthours);
+
+    document.getElementById('clockHrMin').innerHTML = currenthours + ':' + currentminutes;
+}
+
+function UpdateHRStyle(curH) {
+    if (curH >= 10)
+        document.getElementById('clockHrMin').style.left = '60px';
+    else
+        document.getElementById('clockHrMin').style.left = '110px';
 }
 
 
+function UpdateDate() {
+    var dayString = Day2Day(currenttime.getDay());
+    var curYear = currenttime.getYear() + 1900;
+    var monthString = Month2Month(currenttime.getMonth());
+    document.getElementById('clockdate').innerHTML = dayString + ', ' + monthString + ' ' + currenttime.getDate() + ', ' + curYear;
+    
+}
+
+// Read the day(number) and return the Day as String
 function Day2Day(day) {
     var dayString = '';
     
@@ -82,6 +130,7 @@ function Day2Day(day) {
     return dayString;
 }
 
+// Read the month(number) and return the Month as string
 function Month2Month(month) {
     var monthString = '';
     
@@ -133,18 +182,25 @@ function Month2Month(month) {
 function SlideDownWindow(type) {
     var div = document.getElementById('dropDownWindow');
     
-    if (menu_status == 1) {
-        RemoveFaceCamera();
+    if (menu_status == 1 && type != 0) {
+        //RemoveFaceCamera();
+    } else if (menu_status == 2 && type != 1) {
+        ExitFromMedia();
+        cleanUpMedia();
+    } else if (menu_status == type + 1) {
+        return;
     } 
 
     switch(type) {
         case 0:
             menu_status = 1;
-            InitFaceDetection();
+            // InitFaceDetection();
+            div.innerHTML = "virtual face";
             break;
         case 1:
-            menu_status = 2;
             LoadMedia();
+            InitMediaButsPos();
+            menu_status = 2;
             break;
         case 2:
             menu_status = 3;
@@ -156,5 +212,6 @@ function SlideDownWindow(type) {
             div.innerHTML = "drop-down window";
             break;
     }
+    console.log('Switch Type: ', type);
 }
 

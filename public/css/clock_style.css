@@ -1,0 +1,67 @@
+.clockCircle {
+  margin: 0 auto;
+  position: relative;
+  font-size: 35px;
+  font-weight: bold;
+  color: #9b9a9c;
+  border-radius: 50%;
+  background-size: 100%;
+}
+
+.clockFace {
+  width: 100%;
+  height: 100%;
+}
+
+.clockFace::after {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: white;
+  border-radius: 3px;
+  content: "";
+  display: block;
+}
+
+.clockHourMin {
+  width: 0;
+  height: 0;
+  position: relative;
+  top: 5px;
+  left: 110px;
+  margin: -2px 0 -2px -25%;   /* numbers much match negative length & thickness */
+  padding: 2px 0 2px 25%;     /* indicator length & thickness */
+  font-size: 90px;
+  font-weight: normal;  
+  background: #222;
+  color: 'white';
+  -webkit-transform-origin: 100% 50%;
+  -ms-transform-origin: 100% 50%;
+  transform-origin: 100% 50%;
+  border-radius: 3px 0 0 3px;
+}
+
+.clockSecond {
+  width: 0;
+  height: 0;
+  float: left;
+  position: relative;
+  font-weight: lighter;  
+  top: -30px;
+  left: 290px;
+  color: #79787a;
+}
+
+.clockAP {
+  width: 0;
+  height: 0;
+  float: left;
+  position: relative;
+  font-weight: lighter;  
+  top: 0px;
+  left: 350px;
+  color: 'white';
+}

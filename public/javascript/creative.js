@@ -1,7 +1,7 @@
 // canvas
 // allows me global access to canvas and it’s width and height properties
-var w, width, h, height;
-var canvas;
+var w, width, h, height, w_media, width_media, h_media, height_media;
+var canvas, mediacanvas;
 
 // this enables me to have many canvases all positioned on top of eachother at 100% width and height of page
 function createCanvas(canvas_name, id_name, sizeX, sizeY){
@@ -19,6 +19,35 @@ function createCanvas(canvas_name, id_name, sizeX, sizeY){
         window.addEventListener("resize", resize(sizeX, sizeY), false);
         return ctx;
 }
+
+function createMediaCanvas(canvas_name, id_name, sizeX, sizeY){
+        mediacanvas = document.createElement('canvas');
+        //var body = document.querySelector('body');
+        var body = document.getElementById(id_name);
+        mediacanvas.setAttribute("id", canvas_name);
+        mediacanvas.style.position = "relative";
+        mediacanvas.style.left = "0px";
+        mediacanvas.style.top = "0px";
+        body.appendChild(mediacanvas);
+        var ctx = mediacanvas.getContext('2d');
+
+        resizeMedia(canvas_name, sizeX, sizeY);
+        window.addEventListener("resizeMedia", resizeMedia(canvas_name, sizeX, sizeY), false);
+        return ctx;
+}
+
+function resizeMedia(canvasName, sizeX, sizeY){
+       // var c = document.getElementsByTagName('canvas');
+        var c = document.getElementById(canvasName);
+        // width = w = window.innerWidth;
+       // height = h = window.innerHeight;
+        width_media = w_media = sizeX;
+        height_media = h_media = sizeY;
+        
+        c.width = width_media;
+        c.height = height_media;
+}
+
 
 
 function createGLCanvas(canvas_name){

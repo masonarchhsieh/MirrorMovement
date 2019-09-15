@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Handtrack.js : A library for prototyping realtime handtracking in the browser. </title>
+  <link rel="stylesheet" href="https://unpkg.com/carbon-components@latest/css/carbon-components.css" />
+  <link rel="stylesheet" href="./handTrack.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/clock_style.css">
+  <link rel="stylesheet" href="css/player.css">
+  <script type="text/javascript" src="javascript/creative.js"> </script>
+  <script type="text/javascript" src="javascript/main.js"> </script>
+  <script type="text/javascript" src="javascript/pearson.js"> </script>
+
+
+
+</head>
+
+<body class="bx--body p20" onload="Init()">
+
+   <div id="weather">
+            <a class="weatherwidget-io" href="https://forecast7.com/en/n37d81144d96/melbourne/" data-label_1="MELBOURNE" data-label_2="WEATHER" data-font="Ubuntu" data-icons="Climacons" data-days="3" data-theme="dark" >MELBOURNE WEATHER</a>
+    <script>
+        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+    </script>
+        </div>
+
+        <div id="clock" class="clock">
+            <p id="clockdate" class="clockCircle"> Date </p>
+            <p id="clockHrMin" class="clockHourMin"> Hour:Min </p>
+            <p id="clockSec" class="clockSecond"> sec </p>
+            <p id="clockAP" class="clockAP"> am/pm </p>
+        </div>
+        
+        <div id="app-bar" class="apps">
+            <div id="glasses-div" onclick="SlideDownWindow(0)"> 
+            </div>
+            <div id="media-div" onclick="SlideDownWindow(1)">
+            </div>
+            <div id="screenshot-div" onclick="SlideDownWindow(2)">
+            </div>
+            <div id="dropDownWindow">       
+            </div>
+        </div>
+
+      
+        <script type="text/javascript" src="javascript/motion.js"> </script>
+        <script type="text/javascript" src="javascript/player.js"> </script>
+        <script type="text/javascript" src="javascript/playerMotion.js"> </script>
+
+
+
+
+
+
+  <!-- <img id="img" src="hand.jpg"/>  -->
+  <div class="p20">
+    Handtrack.js allows you prototype handtracking interactions in the browser in 10 lines of code.
+  </div>
+  <div class="mb10">
+    <button onclick="toggleVideo()" id="trackbutton" class="bx--btn bx--btn--secondary" type="button">
+      Toggle Video
+    </button>
+    <div id="updatenote" class="updatenote mt10"> loading model ..</div>
+  </div>
+  <video class="videobox canvasbox" autoplay="autoplay" id="myvideo"></video>
+
+  <canvas id="canvasVideo" class="border canvasbox"></canvas>
+
+  <script src="https://unpkg.com/carbon-components@latest/scripts/carbon-components.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/handtrackjs/dist/handtrack.min.js"> </script>
+  <script src="./handTrack.js"></script>
+</body>
+
+</html>

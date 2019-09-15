@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title> Smart Mirror </title>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/clock_style.css">
-        <link rel="stylesheet" href="css/player.css">
-        <link rel="stylesheet" href="css/camera.css">
-        <script type="text/javascript" src="javascript/creative.js"> </script>
-        <script type="text/javascript" src="javascript/main.js"> </script>
-        <script type="text/javascript" src="javascript/pearson.js"> </script>
 
-    </head>
+<head>
+    <title>PoseNet - Camera Feed Demo</title>
+    <style>
+    @media only screen and (max-width: 600px) {
+      .footer-text, .dg {
+        display: none;
+      }
+    }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/clock_style.css">
+    <link rel="stylesheet" href="css/player.css">
+    <script type="text/javascript" src="javascript/creative.js"> </script>
+    <script type="text/javascript" src="javascript/main.js"> </script>
+    <script type="text/javascript" src="javascript/pearson.js"> </script>
+</head>
 
-    <body onload="Init()">
-        <div id="weather">
+<body onload="Init()">
+    <div id="weather">
             <a class="weatherwidget-io" href="https://forecast7.com/en/n37d81144d96/melbourne/" data-label_1="MELBOURNE" data-label_2="WEATHER" data-font="Ubuntu" data-icons="Climacons" data-days="3" data-theme="dark" >MELBOURNE WEATHER</a>
     <script>
         !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
@@ -46,15 +52,31 @@
         <script type="text/javascript" src="javascript/playerMotion.js"> </script>
 
 
-        <!-- Scripts for virtual glass fitting -->
-        <!-- jquery -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <!-- three.js r54 -->
-        <script type="text/javascript" src="javascript/three.js"></script>
-        <!-- clmtrack -->
-        <script type="text/javascript" src="javascript/utils.js"></script>
-        <script type="text/javascript" src="javascript/clmtrackr.js"></script>
-        <script type="text/javascript" src="javascript/camera.js"> </script>
-    </body>
+
+    
+    
+    <div id="loading">
+        Loading the model...
+    </div>
+
+    <div id='main' style='display:none'>
+        <video id="video" playsinline style=" -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        display: none;
+        ">
+        </video>
+        <canvas id="output" />
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/dat.gui@0.7.2/build/dat.gui.js"></script>
+    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+    <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
+    
+    <script src="demo_util.js"></script>
+    <script src="stats.min.js "></script>
+    <script src="camera.js"></script>
+
+</body>
 
 </html>

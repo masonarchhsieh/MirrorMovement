@@ -2,7 +2,7 @@
 var canvas0, canvas1, canvas2;
 var number_of_canvas = 3;
 var iconSizeX = iconSizeY = 140;
-var glasses_color = '#fc3903', media_color = '#fcbe03', camera_color = '#03adfc';
+var media_color = '#fc3903', glasses_color = '#fcbe03', camera_color = '#03adfc';
 
 // Initialise canvas for drawing icons on apps-bar
 function initCanvas() {
@@ -52,11 +52,11 @@ for (var i = 0; i < number_of_balls; i++) {
     addBall();
 }
 
-function drawCanvas(ctx_i, color) {
+function drawCanvas(ctx_i, color, icon_w, icon_h) {
     ctx_i.strokeStyle = color;
     ctx_i.lineWidth = 2;
     ctx_i.beginPath();
-    ctx_i.arc(w/2, h/2, radius, (0, 255, 0), 2 * Math.PI);
+    ctx_i.arc(icon_w/2, icon_h/2, radius, (0, 255, 0), 2 * Math.PI);
     ctx_i.stroke();
 }
 
@@ -75,28 +75,32 @@ function draw() {
     refreshCanvas(140, 140);
     moveBall();
     drawBall();
+
+    // Call the drawMedia()
+    if (menu_status == 2)
+        drawMedia();
 }
 
 function moveBall() {
     for (var i = 0; i < balls.length; i++) {
         var b = balls[i];
         if (i % 2 == 0)
-            ClockWise(b);
+            ClockWise(b, iconSizeX, iconSizeY, radius);
         else
-            CounterClockWise(b);
+            CounterClockWise(b, iconSizeX, iconSizeY, radius);
     }
 }
 
-function ClockWise(ball) {
+function ClockWise(ball, iconW, iconH, iconRadius) {
     ball.angle += ball.speed;
-    ball.x = w/2 + Math.cos(radians(ball.angle))*radius;
-    ball.y = h/2 + Math.sin(radians(ball.angle))*radius;
+    ball.x = iconW/2 + Math.cos(radians(ball.angle))*iconRadius;
+    ball.y = iconH/2 + Math.sin(radians(ball.angle))*iconRadius;
 }
 
-function CounterClockWise(ball) {
+function CounterClockWise(ball, iconW, iconH, iconRadius) {
     ball.angle -= ball.speed;
-    ball.x = w/2 - Math.cos(radians(ball.angle))*radius;
-    ball.y = h/2 - Math.sin(radians(ball.angle))*radius;
+    ball.x = iconW/2 - Math.cos(radians(ball.angle))*iconRadius;
+    ball.y = iconH/2 - Math.sin(radians(ball.angle))*iconRadius;
 }
 
 function drawTheBall(ctx, ball, color) {
@@ -105,17 +109,13 @@ function drawTheBall(ctx, ball, color) {
 }
 
 function drawBall() {
-    drawCanvas(canvas0, glasses_color);
-    drawCanvas(canvas1, media_color);
-    drawCanvas(canvas2, camera_color);
+    drawCanvas(canvas0, glasses_color, 140, 140);
+    drawCanvas(canvas1, media_color, 140, 140);
+    drawCanvas(canvas2, camera_color, 140, 140);
 
     drawTheBall(canvas0, balls[0], glasses_color);
     drawTheBall(canvas1, balls[1], media_color);
     drawTheBall(canvas2, balls[2], camera_color);
 }
 
-function getPositionXY(ball) {
-    // call ball.x && ball.y
-    return ball;
-}
 
