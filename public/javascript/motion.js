@@ -13,7 +13,6 @@ function initCanvas() {
 
 initCanvas();
 
-
 // To load the icons of our applications: gmail, media player, camera
 var base_image_glasses, base_image_media, base_image_camera;
 var glasses_icon_path = './images/glasses.png';
@@ -46,10 +45,12 @@ function refreshCanvas(icon_w, icon_h) {
 var number_of_balls = 3;
 var balls = [];
 // radius of our circle
-var radius = 64;
+var radius = 62;
+var animRadius = [68, 74];
+var initMenuAngle = [0, 0, 180];
 
 for (var i = 0; i < number_of_balls; i++) {
-    addBall();
+    addBall(i);
 }
 
 function drawCanvas(ctx_i, color, icon_w, icon_h) {
@@ -58,15 +59,43 @@ function drawCanvas(ctx_i, color, icon_w, icon_h) {
     ctx_i.beginPath();
     ctx_i.arc(icon_w/2, icon_h/2, radius, (0, 255, 0), 2 * Math.PI);
     ctx_i.stroke();
+    
+    //drawMenuAnimation(ctx_i, icon_w, icon_h);
 }
 
-function addBall(){
+function drawMenuAnimation(ctx_i, icon_w, icon_h) {
+    for (let i = 0; i < animRadius.length; i++) {
+        ctx_i.beginPath();
+        ctx_i.arc(icon_w/2, icon_h/2, animRadius[i], (0, 255, 0), 2 * Math.PI);
+        ctx_i.stroke();
+    }
+
+}
+
+function getAnimColor(iconStatus) {
+    var color = '';
+    switch (iconStatus) {
+        case 0:
+            color = 'grey';
+            break;
+        case 1:
+            color = 'white';
+            break;
+    }
+
+    return color;
+}
+
+
+
+function addBall(i){
     var ball = {
         x: 0,
         y: 0,
-        speed: 2,
+        strength: 0,
+        speed: 2.5,
         size: 15,
-        angle: random(360) 
+        angle: initMenuAngle[i] 
     }
     balls.push(ball);
 }

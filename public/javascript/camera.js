@@ -31,12 +31,12 @@ var TryOnFace = function (params) {
     };
     this.changeStatus('STATUS_READY');
 
-    if (params.debug) {
-        this.debug = true;
-        this.debugMsg = this.status;
-    } else {
-        this.debug = false;
-    }
+   //  if (params.debug) {
+   //      this.debug = true;
+   //      this.debugMsg = this.status;
+   //  } else {
+   //      this.debug = false;
+   //  }
 
     /* CAMERA */
     this.video = document.getElementById('camera');
@@ -86,19 +86,19 @@ var TryOnFace = function (params) {
         ref.loop();
     };
 
-    this.debug = function(msg) {
-        if (this.debug) {
-            this.debugMsg += msg + "<br>";
-        }
-    };
-
-    this.printDebug = function() {
-        if (this.debug) {
-            document.getElementById('debug').innerHTML = this.debugMsg;
-            this.debugMsg = '';
-        }
-    };
-
+    //    this.debug = function(msg) {
+    //        if (this.debug) {
+    //            this.debugMsg += msg + "<br>";
+    //        }
+    //    };
+    //
+    //    this.printDebug = function() {
+    //        if (this.debug) {
+    //            document.getElementById('debug').innerHTML = this.debugMsg;
+    //            this.debugMsg = '';
+    //        }
+    //    };
+    //
     this.loop = function() {
         requestAnimFrame(ref.loop);
 
@@ -145,11 +145,11 @@ var TryOnFace = function (params) {
             }
 
             ref.render();
-            ref.debug(ref.status);
+            // ref.debug(ref.status);
         }
 
         //print debug
-        ref.printDebug();
+        // ref.printDebug();
     };
 
     /* 3D */
@@ -265,50 +265,17 @@ var TryOnFace = function (params) {
     }
 
     //print debug
-    this.printDebug();
+    // this.printDebug();
 };
 
 var tryOn = null;
-$(window).load(function () {
-    $('#start').hide();
-
-    var object = {
-        outside: {
-            left: './glasses/left.png',
-            right: './glasses/right.png',
-            front: './glasses/front.png'
-        }
-    };
-
-    tryOn = new TryOnFace({
-        width: 640,
-        height: 480,
-        debug: true,
-        object: object,
-        statusHandler: function(status) {
-            switch(status) {
-                case "STATUS_READY": {
-                    /* Ready! Show start button or something... */
-                    $('#start').show();
-                }; break;
-                case "STATUS_CAMERA_ERROR": {
-                    /* Handle camera error */
-                }; break;
-                case "STATUS_SEARCH": {
-                    /* Show some message while searching a face */
-                }; break;
-                case "STATUS_FOUND": {
-                    /* OK! */
-                }
-            }
-        }
-    });
-
-    $('#start').click(function() {
-        tryOn.start();
-    });
-});
-
+var object = {
+    outside: {
+        left: './glasses/left.png',
+        right: './glasses/right.png',
+        front: './glasses/front.png'
+    }
+};
 
 // Initialise the div 
 function InitFaceDetection() {
@@ -320,21 +287,10 @@ function InitFaceDetection() {
                             + '<button id="start">Start</button>'
                             + '<div id="debug"> </div>';
 
-
-    $('#start').hide();
-
-    var object = {
-        outside: {
-            left: './glasses/left.png',
-            right: './glasses/right.png',
-            front: './glasses/front.png'
-        }
-    };
-
-    tryOn = new TryOnFace({
-        width: 640,
-        height: 480,
-        debug: true,
+     tryOn = new TryOnFace({
+        width: 430,
+        height: 430,
+        debug: false,
         object: object,
         statusHandler: function(status) {
             switch(status) {
@@ -359,7 +315,6 @@ function InitFaceDetection() {
     camera_status = 1;
     tryOn.start();
     //});
-
 }
 
 function RemoveFaceCamera() {

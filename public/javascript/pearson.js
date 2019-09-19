@@ -3,17 +3,15 @@ var mouse_arrX = [], mouse_arrY = [];
 var mouse_arrX2 = [], mouse_arrY2 = [];
 var menu_icon_posX_arr = new Array();
 var menu_icon_posY_arr = new Array();
-var buf_size = 40;                         // Compare a subsequent 100 positions
+var buf_size = 50;                         // Compare a subsequent 100 positions
 var min_size_for_tracking = 30;             // minimum size of window to compare: 30, at least it needs to follow the target
                                             // for 1 secs...
 var num_item_for_tracking = 0;
-
+let locker = false;
 // MotionStatus determines the motion status
 // 0: No event.  1: Open Virtual glasses, 2: Open Media player. 3: Open Camera 
 var MotionStatus = 0, PrevMotionStatus = 0;
-
-const cycle_time = 1500;                    // 
-const threshold = 0.80;                     // The threshold value for determining the motion
+const threshold = 0.85;                     // The threshold value for determining the motion
 var slack_slot = 4;             
 
 InitIconArr();
@@ -81,6 +79,13 @@ function UpdateMousePos(tempX, tempY) {
     }
 }
 
+function UpdatePos() {
+    //UpdateMousePos(pose.keypoints[10].position.x, pose.keypoints[10].position.y, pose.keypoints[9].position.x, pose.keypoints[9].position.y);
+    // The rightWristPos and leftWristPos are defined in camera.js
+    UpdateMousePos(rightWristPos[0], rightWristPos[1], leftWristPos[0], leftWristPos[1]);
+
+}
+
 function UpdateMousePos(tempX, tempY, tempX1, tempY1) {
     AddVal2Arr(mouse_arrX, tempX);
     AddVal2Arr(mouse_arrY, tempY);
@@ -110,13 +115,6 @@ function AddVal2Arr(arr, newValue) {
         arr.pop();
     }
     arr.unshift(newValue);
-}
-
-function DebugTracking() {
-    for (let i = 0; i < num_item_for_tracking; i++) {
-        console.log("X" + i + ": " + Number(SamplePearsonCorrelationCoefficient(mouse_arrX, menu_icon_posX_arr[i])).toFixed(4) +
-        ';  Y' + i + ": " + Number(SamplePearsonCorrelationCoefficient(mouse_arrY, menu_icon_posY_arr[i])).toFixed(4));
-    }
 }
 
 function Tracking(verbose) {
@@ -158,19 +156,19 @@ function PrintOutPearson(item, coeX, coeY) {
 
 function CleanUp() {
     // Clean up the menu buffer
-    for (let i = 0; i < num_item_for_tracking; i++) {
-        while (menu_icon_posX_arr[i].length > 0) {
-            menu_icon_posX_arr[i].pop();
-            menu_icon_posY_arr[i].pop();
-        }
-    }
-
-    // Clean up the mouse buffer | the gesture pos buffer
-     while (mouse_arrX.length > 0) {
-        mouse_arrX.pop();
-        mouse_arrY.pop();
-    }
-
+//    for (let i = 0; i < num_item_for_tracking; i++) {
+//        while (menu_icon_posX_arr[i].length > 0) {
+//            menu_icon_posX_arr[i].pop();
+//            menu_icon_posY_arr[i].pop();
+//        }
+//    }
+//
+//    // Clean up the mouse buffer | the gesture pos buffer
+//     while (mouse_arrX.length > 0) {
+//        mouse_arrX.pop();
+//        mouse_arrY.pop();
+//    }
+//
     // Update the slack_slot 
     slack_slot = 4;
 }
@@ -196,7 +194,8 @@ function ExitFromMedia() {
 }
 
 
-
 // Consider: 30hz for fetching images from the camera...
-// setInterval('UpdateMousePos()', 33);         // Collect 30 frames/sec
-setInterval('Tracking()', 400);                 // Calling the tracking every .4 secs;
+function SetInitForPearson() {
+    setInterval('UpdatePos()', 50);         // Collect 20 frames/sec
+    setInterval('Tracking()', 500);         // Calling the tracking every .4 secs;
+}

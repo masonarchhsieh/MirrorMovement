@@ -39,8 +39,9 @@ function isMobile() {
  * Loads a the camera to be used in the demo
  *
  */
+var video;
 async function setupCamera() {
-  const video = document.getElementById('video');
+  video = document.getElementById('video');
   video.width = maxVideoSize;
   video.height = maxVideoSize;
 
@@ -67,6 +68,7 @@ async function setupCamera() {
   }
 }
 
+
 async function loadVideo() {
   const video = await setupCamera();
   video.play();
@@ -92,9 +94,9 @@ const guiState = {
     nmsRadius: 20.0,
   },
   output: {
-    showVideo: true,
-    showSkeleton: true,
-    showPoints: true,
+    showVideo: false,
+    showSkeleton: false,
+    showPoints: false,
   },
   net: null,
 };
@@ -157,7 +159,7 @@ function setupGui(cameras, net) {
   output.add(guiState.output, 'showVideo');
   output.add(guiState.output, 'showSkeleton');
   output.add(guiState.output, 'showPoints');
-  output.open();
+  //output.open();
 
 
   architectureController.onChange(function (architecture) {
@@ -190,6 +192,7 @@ function setupFPS() {
  * Feeds an image to posenet to estimate poses - this is where the magic happens.
  * This function loops with a requestAnimationFrame method.
  */
+var leftWristPos = [0, 0], rightWristPos = [0, 0];
 function detectPoseInRealTime(video, net) {
   const canvas = document.getElementById('output');
   const ctx = canvas.getContext('2d');
@@ -222,21 +225,23 @@ function detectPoseInRealTime(video, net) {
     let minPartConfidence;
     switch (guiState.algorithm) {
       case 'single-pose':
-        const pose = await guiState.net.estimateSinglePose(video, imageScaleFactor, flipHorizontal, outputStride);
+        let pose = await guiState.net.estimateSinglePose(video, imageScaleFactor, flipHorizontal, outputStride);
         
         // flip the x-cord
         for (let i=0; i<pose.keypoints.length; i++) {
             pose.keypoints[i].position.x = maxVideoSize - pose.keypoints[i].position.x;
-        }
 
+            if (i == 9) {
+                leftWristPos[0] = pose.keypoints[i].position.x;
+                leftWristPos[1] = pose.keypoints[i].position.y;
+            } else if (i == 10) {
+                rightWristPos[0] = pose.keypoints[i].position.x;
+                rightWristPos[1] = pose.keypoints[i].position.y;
+            }
+       }
+        
         poses.push(pose);
-       
-        // Update the motion position: called UpdateMousePos(tempX, tempY, tempX1, tempY1) in pearson.js
-        UpdateMousePos(pose.keypoints[10].position.x, pose.keypoints[10].position.y,
-                        pose.keypoints[9].position.x, pose.keypoints[9].position.y);
-
-        //console.log('right hand: ' + pose.keypoints[10].position.x + '  , y: ' + pose.keypoints[10].position.y );
-            
+           
         minPoseConfidence = Number(
           guiState.singlePoseDetection.minPoseConfidence);
         minPartConfidence = Number(
@@ -247,7 +252,11 @@ function detectPoseInRealTime(video, net) {
           guiState.multiPoseDetection.maxPoseDetections,
           guiState.multiPoseDetection.minPartConfidence,
           guiState.multiPoseDetection.nmsRadius);
-
+         // flip the x-cord
+        for (let i=0; i<pose.keypoints.length; i++) {
+            pose.keypoints[i].position.x = maxVideoSize - pose.keypoints[i].position.x;
+        }
+        
         minPoseConfidence = Number(guiState.multiPoseDetection.minPoseConfidence);
         minPartConfidence = Number(guiState.multiPoseDetection.minPartConfidence);
         break;
@@ -281,10 +290,8 @@ function detectPoseInRealTime(video, net) {
 
     // End monitoring code for frames per second
     stats.end();
-
     requestAnimationFrame(poseDetectionFrame);
   }
-
   poseDetectionFrame();
 }
 

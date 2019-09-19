@@ -1,22 +1,23 @@
 var menu_status = 0;
 function Init() {
-    //UpdateWeather();
+    UpdateWeather();
+    InitTime();
     UpdateTime();
     setInterval('UpdateSec()', 1000);
-    //setInterval('UpdateWeather()', 60000);
+    setInterval('UpdateWeather()', 600000);
+    setTimeout(SetInitForPearson(), 2000);
 }
 
 function UpdateWeather() {
-    window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  
-    window.myWidgetParam.push({id: 15,cityid: '2158177', appid: 'ee054b9b6e341cb14685f01e6774ce31', units: 'metric', containerid: 'openweathermap-widget-15', }); 
-    (function() {
-        var script = document.createElement('script');
-        script.async = true;
-        script.charset = "utf-8";
-        script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(script, s);  
-    })();
+    !function(d,s,id) {
+        var js,fjs = d.getElementsByTagName(s)[0];
+        if (!d.getElementById(id)) {
+            js = d.createElement(s);
+            js.id=id;
+            js.src='https://weatherwidget.io/js/widget.min.js';
+            fjs.parentNode.insertBefore(js,fjs);
+        }
+    } (document,'script','weatherwidget-io-js');
 }
 
 /* 2. for updating the time */
@@ -25,9 +26,20 @@ var currentminutes;
 var currentseconds;
 var timeofday;
 
+var dateP, hrMinP, secP, apP;
+var currenttime;
+function InitTime() {
+    dateP = document.getElementById('clockdate');
+    hrMinP = document.getElementById('clockHrMin');
+    secP = document.getElementById('clockSec');
+    apP = document.getElementById('clockAP');
+}
+
+
+
+
 function UpdateTime() {
-    var time = document.getElementById("clock");
-    var currenttime = new Date();
+    currenttime = new Date();
     currenthours = currenttime.getHours();
     currentminutes = currenttime.getMinutes();
     currentseconds = currenttime.getSeconds();
@@ -43,52 +55,48 @@ function UpdateTime() {
     var curYear = currenttime.getYear() + 1900;
     var monthString = Month2Month(currenttime.getMonth());
     UpdateHRStyle(currenthours);
-    document.getElementById('clockdate').innerHTML = dayString + ', ' + monthString + ' ' + currenttime.getDate() + ', ' + curYear;
-    document.getElementById('clockHrMin').innerHTML = currenthours + ':' + currentminutes;
-    document.getElementById('clockSec').innerHTML = currentseconds;
-    document.getElementById('clockAP').innerHTML = timeofday;
+    dateP.innerHTML = dayString + ', ' + monthString + ' ' + currenttime.getDate() + ', ' + curYear;
+    hrMinP.innerHTML = currenthours + ':' + currentminutes;
+    secP.innerHTML = currentseconds;
+    apP.innerHTML = timeofday;
 
 }
 
 function UpdateSec() {
-    var currenttime = new Date();
+    currenttime = new Date();
     currentseconds = currenttime.getSeconds();
     
     currentseconds = ( currentseconds < 10 ? "0" : "" ) + currentseconds;
-    document.getElementById('clockSec').innerHTML = currentseconds;
+    secP.innerHTML = currentseconds;
     
-    if (Number(currentseconds) == 0) {
+    if (Number(currentseconds) == 0) 
         UpdateMin();
-    }
+    
 }
 
 function UpdateMin() {
-    var currenttime = new Date();
     currentminutes = currenttime.getMinutes();
     currentminutes = ( currentminutes < 10 ? "0" : "" ) + currentminutes;
     
-    if (Number(currentminutes) == 0) {
-        currenthours = currenttime.getHours();
-        timeofday = ( currenthours < 12 ) ? "am" : "pm";
-        currenthours = ( currenthours > 12 ) ? currenthours - 12 : currenthours;
-        currenthours = ( currenthours == 0 ) ? 12 : currenthours;
-        document.getElementById('clockAP').innerHTML = timeofday;
+    currenthours = currenttime.getHours();
+    timeofday = ( currenthours < 12 ) ? "am" : "pm";
+    currenthours = ( currenthours > 12 ) ? currenthours - 12 : currenthours;
+    currenthours = ( currenthours == 0 ) ? 12 : currenthours;
+    apP.innerHTML = timeofday;
 
-        if (Number(currenthours) == 0) {
-            UpdateDate();
-        }
+    if (Number(currenthours) == 0) {
+        UpdateDate();
     }
 
     UpdateHRStyle(currenthours);
-
-    document.getElementById('clockHrMin').innerHTML = currenthours + ':' + currentminutes;
+    hrMinP.innerHTML = currenthours + ':' + currentminutes;
 }
 
 function UpdateHRStyle(curH) {
     if (curH >= 10)
-        document.getElementById('clockHrMin').style.left = '60px';
+        hrMinP.style.left = '60px';
     else
-        document.getElementById('clockHrMin').style.left = '110px';
+        hrMinP.style.left = '110px';
 }
 
 
@@ -96,9 +104,8 @@ function UpdateDate() {
     var dayString = Day2Day(currenttime.getDay());
     var curYear = currenttime.getYear() + 1900;
     var monthString = Month2Month(currenttime.getMonth());
-    document.getElementById('clockdate').innerHTML = dayString + ', ' + monthString + ' ' + currenttime.getDate() + ', ' + curYear;
-    
-}
+    dateP.innerHTML = dayString + ', ' + monthString + ' ' + currenttime.getDate() + ', ' + curYear;
+}    
 
 // Read the day(number) and return the Day as String
 function Day2Day(day) {
@@ -173,7 +180,6 @@ function Month2Month(month) {
             break;
     }
     return monthString;
-
 }
 
 /* 2. end here */
@@ -183,7 +189,7 @@ function SlideDownWindow(type) {
     var div = document.getElementById('dropDownWindow');
     
     if (menu_status == 1 && type != 0) {
-        //RemoveFaceCamera();
+       RemoveFaceCamera();
     } else if (menu_status == 2 && type != 1) {
         ExitFromMedia();
         cleanUpMedia();
@@ -194,8 +200,8 @@ function SlideDownWindow(type) {
     switch(type) {
         case 0:
             menu_status = 1;
-            // InitFaceDetection();
-            div.innerHTML = "virtual face";
+            InitFaceDetection();
+            //div.innerHTML = "virtual face";
             break;
         case 1:
             LoadMedia();
@@ -204,6 +210,7 @@ function SlideDownWindow(type) {
             break;
         case 2:
             menu_status = 3;
+            callSnapShot();       // call the snapshot
             div.innerHTML = "camera";
             break;
 

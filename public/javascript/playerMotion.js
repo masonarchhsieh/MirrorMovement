@@ -130,7 +130,7 @@ function addMediaBut(butName, tempX, tempY, tempImg, tempR){
         centerY: tempY,
         x: 0,
         y: 0,
-        speed: 1,
+        speed: 1.5,
         size: 15,
         name: butName,
         image: tempImg,

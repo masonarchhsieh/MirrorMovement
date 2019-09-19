@@ -79,6 +79,7 @@ div {
 
 /* Apps: menu-bar, Gmail, Messenger, Media Player, Camera */
 .apps {
+    top: 50px;
     width: 430px;
     height: 40%;
     float: right;
