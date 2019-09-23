@@ -47,7 +47,7 @@ var balls = [];
 // radius of our circle
 var radius = 62;
 var animRadius = [68, 74];
-var initMenuAngle = [0, 0, 180];
+var initMenuAngle = [0, 120, 240];
 
 for (var i = 0; i < number_of_balls; i++) {
     addBall(i);
@@ -95,7 +95,8 @@ function addBall(i){
         strength: 0,
         speed: 2.5,
         size: 15,
-        angle: initMenuAngle[i] 
+        angle: initMenuAngle[i],
+        running: false
     }
     balls.push(ball);
 }
@@ -113,7 +114,7 @@ function draw() {
 function moveBall() {
     for (var i = 0; i < balls.length; i++) {
         var b = balls[i];
-        if (i % 2 == 0)
+        if (!b.running)
             ClockWise(b, iconSizeX, iconSizeY, radius);
         else
             CounterClockWise(b, iconSizeX, iconSizeY, radius);
@@ -146,7 +147,24 @@ function drawBall() {
     drawTheBall(canvas1, balls[1], media_color);
     drawTheBall(canvas2, balls[2], camera_color);
 
+}
 
+function TriggerAppsID(id) {
+    for (let i = 0; i < number_of_balls; i++) {
+        if (i == id && id != 2)         // When calling the snapshot, we don't change the icon movement
+            balls[i].running = true;
+        else
+            balls[i].running = false;
+    }
+}
+
+function CloseAppByID(id) {
+    balls[id].running = false;
+    
+}
+
+// For drawing squares:
+function drawSquare() {
     moveSquare(0);
     drawTheSquare(canvas0, squares[0], glasses_color); 
     moveSquare(1);
@@ -155,9 +173,6 @@ function drawBall() {
     drawTheSquare(canvas2, squares[2], camera_color); 
 }
 
-
-
-// For drawing squares:
 
 var squares = [];
 // For adding the square to the canvas
@@ -168,7 +183,8 @@ function addSquare() {
         strength: 0,
         speed: 2.5,
         size: 15,               // The size of the dot.square
-        len: 130                // The length of the square
+        len: 130,                // The length of the square
+        running: false
     };
 
     squares.push(square);
