@@ -3,7 +3,7 @@ var mouse_arrX = [], mouse_arrY = [];
 var mouse_arrX2 = [], mouse_arrY2 = [];
 var menu_icon_posX_arr = new Array();
 var menu_icon_posY_arr = new Array();
-var buf_size = 50;                         // Compare a subsequent 100 positions
+var buf_size = 50;                          // Compare a subsequent 100 positions
 var min_size_for_tracking = 30;             // minimum size of window to compare: 30, at least it needs to follow the target
                                             // for 1 secs...
 var num_item_for_tracking = 0;
@@ -139,7 +139,7 @@ function Tracking(verbose) {
             // If chosen the menu icon
             if (i < 3) {
                 CleanUp();
-                SlideDownWindow(i);
+                SlideDownWindow(i);         // in main.js
             } 
             // If chosen a media button
             else {
@@ -170,7 +170,7 @@ function CleanUp() {
 //    }
 //
     // Update the slack_slot 
-    slack_slot = 4;
+    slack_slot = 3;
 }
 
 function InitMediaButsPos() {

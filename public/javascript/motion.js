@@ -145,6 +145,72 @@ function drawBall() {
     drawTheBall(canvas0, balls[0], glasses_color);
     drawTheBall(canvas1, balls[1], media_color);
     drawTheBall(canvas2, balls[2], camera_color);
+
+
+    moveSquare(0);
+    drawTheSquare(canvas0, squares[0], glasses_color); 
+    moveSquare(1);
+    drawTheSquare(canvas1, squares[1], media_color); 
+    moveSquare(2);
+    drawTheSquare(canvas2, squares[2], camera_color); 
 }
 
 
+
+// For drawing squares:
+
+var squares = [];
+// For adding the square to the canvas
+function addSquare() {
+    var square = {
+        x: 0,
+        y: 0,
+        strength: 0,
+        speed: 2.5,
+        size: 15,               // The size of the dot.square
+        len: 130                // The length of the square
+    };
+
+    squares.push(square);
+}
+
+for (let i = 0; i < 3; i++) {
+    addSquare();
+}
+
+function moveSquare(i) {
+    if (i % 2 == 0) 
+        ClockWiseSquare(squares[i]);
+    else
+        CounterClockWiseSquare(squares[i]);
+}
+
+function ClockWiseSquare(squ) {
+    if (squ.x < squ.len && squ.y == 0) {
+        squ.x += squ.speed;
+    } else if (squ.x >= squ.len && squ.y < squ.len) {
+        squ.y += squ.speed;
+    } else if (squ.y >= squ.len && squ.x > 0) {
+        squ.x -= squ.speed;
+    } else {
+        squ.y -= squ.speed;
+    }
+}
+
+function CounterClockWiseSquare(squ) {
+    if (squ.x > 0 && squ.y == 0) {
+        squ.x -= squ.speed;
+    } else if (squ.x == squ.len && squ.y <= squ.len) {
+        squ.y -= squ.speed;
+    } else if (squ.y >= squ.len && squ.x < squ.len) {
+        squ.x += squ.speed;
+    } else if (squ.y <= squ.len) {
+        squ.y += squ.speed;
+    }
+}
+
+
+function drawTheSquare(ctx, squ, color) {
+    ctx.fillStyle = color;
+    ctx.fillEllipse(squ.x, squ.y, squ.size);
+}

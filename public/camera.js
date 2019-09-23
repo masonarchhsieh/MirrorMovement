@@ -20,7 +20,7 @@
 
 // import { drawKeypoints, drawSkeleton } from './demo_util';
 const maxVideoSize = 513;
-const canvasSize = 400;
+const canvasSize = 600;
 const stats = new Stats();
 
 function isAndroid() {
@@ -113,7 +113,7 @@ function setupGui(cameras, net) {
 
   const cameraOptions = cameras.reduce((result, { label, deviceId }) => {
     result[label] = deviceId;
-    return result;
+    return result
   }, {});
 
   const gui = new dat.GUI({ width: 300 });
@@ -135,7 +135,8 @@ function setupGui(cameras, net) {
   input.add(guiState.input, 'outputStride', [8, 16, 32]);
   // Image scale factor: What to scale the image by before feeding it through the network.
   input.add(guiState.input, 'imageScaleFactor').min(0.2).max(1.0);
-  input.open();
+  //input.open();
+  input.close();
 
   // Pose confidence: the overall confidence in the estimation of a person's
   // pose (i.e. a person detected in a frame)
@@ -144,7 +145,8 @@ function setupGui(cameras, net) {
   let single = gui.addFolder('Single Pose Detection');
   single.add(guiState.singlePoseDetection, 'minPoseConfidence', 0.0, 1.0);
   single.add(guiState.singlePoseDetection, 'minPartConfidence', 0.0, 1.0);
-  single.open();
+  //single.open();
+  single.close();
 
   let multi = gui.addFolder('Multi Pose Detection');
   multi.add(
@@ -160,7 +162,7 @@ function setupGui(cameras, net) {
   output.add(guiState.output, 'showSkeleton');
   output.add(guiState.output, 'showPoints');
   //output.open();
-
+  output.close();
 
   architectureController.onChange(function (architecture) {
     guiState.changeToArchitecture = architecture;
@@ -320,7 +322,24 @@ async function bindPage() {
   detectPoseInRealTime(video, net);
 }
 
+
+function InitPoseNet() {
+    const initString = '<div id="loading"> </div>'
+                        + "<div id='main' style='display:none'>"
+                        + '<video id="video" playsinline style=" -moz-transform: scaleX(-1);'
+                        + ' -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1);'
+                        + 'display: none;'
+                        + '">'
+                        + '</video>'
+                        + '<canvas id="output" />'
+                        + '</div>'
+
+    CreateCenterWindow();
+    centerWindow.innerHTML = initString;
+
+    bindPage();
+}
+
 navigator.getUserMedia = navigator.getUserMedia ||
   navigator.webkitGetUserMedia ||
   navigator.mozGetUserMedia;
-bindPage(); // kick off the demo

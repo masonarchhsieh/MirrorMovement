@@ -33,32 +33,6 @@ div {
     float: left;
 }
 
-.weather-widget {
-    margin: 0;
-    width: 200px;
-    height: 125px;
-    padding: 7px;
-    float: left;
-}
-
-
-.weather-widget .col {
-    width: 75px;
-    height: 100%;
-    float:left;
-    text-align: center;
-}
-
-.weather-widget .col.first {
-    width: 175px;
-    text-align: left;
-}
-
-.weather-widget .col.first h3 {
-    margin: 0;
-    padding: 0;
-}
-
 /* Time */
 #clock {
     width: 430px;
@@ -112,4 +86,16 @@ img {
     height:80%;
     top: 150px;
     float: left;
+}
+
+#center-window {
+    position: absolute;
+    top: 210px;
+    left: 260px;
+    width: 640px;
+    height: 480px;
+
+    font-size: 50px;
+    line-height: 480px;
+    text-align: center;
 }

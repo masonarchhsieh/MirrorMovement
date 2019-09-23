@@ -11,6 +11,9 @@
  */
 
 var camera_status = 0;
+let videoWidth = 640, videoHeight = 480;
+
+
 var TryOnFace = function (params) {
     var ref = this;
 
@@ -160,7 +163,9 @@ var TryOnFace = function (params) {
         alpha: true
     });
     renderer.setClearColor(0xffffff, 0);
-    renderer.setSize(this.width, this.height);
+    //renderer.setSize(this.width, this.height);
+    renderer.setSize(videoWidth, videoHeight);
+
 
     //add scene
     var scene = new THREE.Scene;
@@ -279,24 +284,25 @@ var object = {
 
 // Initialise the div 
 function InitFaceDetection() {
-    var dropWindow = document.getElementById('dropDownWindow');
-    dropWindow.innerHTML =  '<div id="tryon">'
+    CreateCenterWindow();           // call from capture.js
+    centerWindow.innerHTML =  '<div id="tryon">'
                             + '<video id="camera" loop></video>'
                             + '<canvas id="overlay"></canvas>'
                             + '</div>'
-                            + '<button id="start">Start</button>'
-                            + '<div id="debug"> </div>';
+                            //+ '<button id="start">Start</button>'
+                            //+ '<div id="debug">'
+                            + '</div>';
 
      tryOn = new TryOnFace({
-        width: 430,
-        height: 430,
+        width: videoWidth,
+        height: videoHeight,
         debug: false,
         object: object,
         statusHandler: function(status) {
             switch(status) {
                 case "STATUS_READY": {
                     /* Ready! Show start button or something... */
-                    $('#start').show();
+                    // $('#start').show();
                 }; break;
                 case "STATUS_CAMERA_ERROR": {
                     /* Handle camera error */
@@ -322,4 +328,6 @@ function RemoveFaceCamera() {
     $('#tryon').empty();
     $('#start').empty();
     $('#debug').empty();
+
+    destroyCenterWindow();
 }

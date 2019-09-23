@@ -5,8 +5,20 @@ function Init() {
     UpdateTime();
     setInterval('UpdateSec()', 1000);
     setInterval('UpdateWeather()', 600000);
+    InitPoseNet(); 
     setTimeout(SetInitForPearson(), 2000);
 }
+
+// The Init function for testing interface only => won't load any apps-modle
+function InitInterface() {
+    UpdateWeather();
+    InitTime();
+    UpdateTime();
+    setInterval('UpdateSec()', 1000);
+    setInterval('UpdateWeather()', 600000);
+}
+
+
 
 function UpdateWeather() {
     !function(d,s,id) {
@@ -193,7 +205,7 @@ function SlideDownWindow(type) {
     } else if (menu_status == 2 && type != 1) {
         ExitFromMedia();
         cleanUpMedia();
-    } else if (menu_status == type + 1) {
+    } else if (menu_status == type + 1 && type != 2) {
         return;
     } 
 
@@ -210,8 +222,10 @@ function SlideDownWindow(type) {
             break;
         case 2:
             menu_status = 3;
-            callSnapShot();       // call the snapshot
-            div.innerHTML = "camera";
+            if (getScreenShotStatus() == 0) {
+                InitScreenShot();
+                //div.innerHTML = "screenshot";
+            }
             break;
 
         default:

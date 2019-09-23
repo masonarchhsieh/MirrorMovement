@@ -21,7 +21,7 @@
         <script type="text/javascript" src="javascript/pearson.js"> </script>
     </head>
 
-    <body onload="Init()">
+    <body onload="InitInterface()">
         <div id="weather">
                 <a class="weatherwidget-io" href="https://forecast7.com/en/n37d81144d96/melbourne/" data-label_1="MELBOURNE" data-label_2="WEATHER" data-font="Ubuntu" data-icons="Climacons" data-days="3" data-theme="dark" >MELBOURNE WEATHER</a>
         </div>
@@ -51,7 +51,20 @@
 
 
         
-       <!-- Scripts for PoseNet, using tensorflow/tfjs -->
+        <div id="loading">
+            Loading the model...
+        </div>
+        <div id='main' style='display:none'>
+            <video id="video" playsinline style=" -moz-transform: scaleX(-1);
+            -o-transform: scaleX(-1);
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+            display: none;
+            ">
+            </video>
+            <canvas id="output" />
+        </div>
+        <!-- Scripts for PoseNet, using tensorflow/tfjs -->
         <script src="https://cdn.jsdelivr.net/npm/dat.gui@0.7.2/build/dat.gui.js"></script>
         <script src="https://unpkg.com/@tensorflow/tfjs"></script>
         <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
