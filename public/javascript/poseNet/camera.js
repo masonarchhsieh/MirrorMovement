@@ -14,12 +14,8 @@
  * limitations under the License.
  * =============================================================================
  */
-// import dat from 'dat.gui';
-// import Stats from 'stats.js';
-// import * as posenet from '../src';
-
-// import { drawKeypoints, drawSkeleton } from './demo_util';
 const maxVideoSize = 513;
+const maxVideoSizeX = 640, maxVideoSizeY = 480;
 const canvasSize = 600;
 const stats = new Stats();
 
@@ -51,8 +47,8 @@ async function setupCamera() {
       'audio': false,
       'video': {
         facingMode: 'user',
-        width: mobile ? undefined : maxVideoSize,
-        height: mobile ? undefined: maxVideoSize}
+        width: mobile ? undefined : maxVideoSizeY,
+        height: mobile ? undefined: maxVideoSizeX}
     });
     video.srcObject = stream;
 
@@ -338,6 +334,22 @@ function InitPoseNet() {
     centerWindow.innerHTML = initString;
 
     bindPage();
+    ShowPoseNet();
+
+}
+
+// Show the video & skeleton & points:
+function ShowPoseNet() {
+    guiState.output.showVideo = true;
+    guiState.output.showSkeleton = true; 
+    guiState.output.showPoints = true;
+}
+
+// Hide the video & skeleton & points:
+function HidePoseNet() {
+    guiState.output.showVideo = false;
+    guiState.output.showSkeleton = false; 
+    guiState.output.showPoints = false;
 }
 
 navigator.getUserMedia = navigator.getUserMedia ||

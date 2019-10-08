@@ -20,10 +20,10 @@
         <script type="text/javascript" src="javascript/main.js"> </script>
         <script type="text/javascript" src="javascript/pearson.js"> </script>
         <script type="text/javascript" src="javascript/time.js"> </script>
-        
+         
     </head>
 
-    <body onload="Init()">
+    <body onload="InitTutorial()">
         <div id="weather">
                 <a class="weatherwidget-io" href="https://forecast7.com/en/n37d81144d96/melbourne/" data-label_1="MELBOURNE" data-label_2="WEATHER" data-font="Ubuntu" data-icons="Climacons" data-days="3" data-theme="dark" >MELBOURNE WEATHER</a>
         </div>
@@ -34,10 +34,12 @@
             <p id="clockSec" class="clockSecond"> sec </p>
             <p id="clockAP" class="clockAP"> am/pm </p>
         </div>
-        
+       
         <div id="app-bar" class="apps">
-        </div>
-
+            <div id="tut-div" onclick="FinishedTut()"> </div>
+            <p> Please follow the movement of the little dot </p>
+        </div> 
+         
         <script type="text/javascript" src="javascript/tutorial.js"> </script>
         <script type="text/javascript" src="javascript/motion.js"> </script>
         <script type="text/javascript" src="javascript/player.js"> </script>

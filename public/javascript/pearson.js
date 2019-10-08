@@ -3,15 +3,15 @@ var mouse_arrX = [], mouse_arrY = [];
 var mouse_arrX2 = [], mouse_arrY2 = [];
 var menu_icon_posX_arr = new Array();
 var menu_icon_posY_arr = new Array();
-var buf_size = 50;                          // Compare a subsequent 100 positions
-var min_size_for_tracking = 30;             // minimum size of window to compare: 30, at least it needs to follow the target
+var buf_size = 80;                          // Compare a subsequent 100 positions
+var min_size_for_tracking = 40;             // minimum size of window to compare: 30, at least it needs to follow the target
                                             // for 1 secs...
 var num_item_for_tracking = 0;
 let locker = false;
 // MotionStatus determines the motion status
 // 0: No event.  1: Open Virtual glasses, 2: Open Media player. 3: Open Camera 
 var MotionStatus = 0, PrevMotionStatus = 0;
-const threshold = 0.85;                     // The threshold value for determining the motion
+const threshold = 0.87;                     // The threshold value for determining the motion
 var slack_slot = 4;             
 
 InitIconArr();
@@ -79,9 +79,10 @@ function UpdateMousePos(tempX, tempY) {
     }
 }
 
+
+// The rightWristPos and leftWristPos are defined in camera.js
 function UpdatePos() {
     //UpdateMousePos(pose.keypoints[10].position.x, pose.keypoints[10].position.y, pose.keypoints[9].position.x, pose.keypoints[9].position.y);
-    // The rightWristPos and leftWristPos are defined in camera.js
     UpdateMousePos(rightWristPos[0], rightWristPos[1], leftWristPos[0], leftWristPos[1]);
 
 }
@@ -99,11 +100,9 @@ function UpdateMousePos(tempX, tempY, tempX1, tempY1) {
     }
 }
 
-
-
 // For updating the icons' positions
 function UpdateIconPos() {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < balls.length; i++) {
         AddVal2Arr(menu_icon_posX_arr[i], balls[i].x);
         AddVal2Arr(menu_icon_posY_arr[i], balls[i].y);
     }
@@ -137,14 +136,22 @@ function Tracking(verbose) {
         }
         if ((coeX >= threshold && coeY >= threshold) || (coeX1 >= threshold && coeY1 >= threshold)) {
             // If chosen the menu icon
+            if (tutStatus) {
+                CleanUp();
+                FinishedTut();
+                return;
+            }
+
             if (i < 3) {
                 CleanUp();
                 SlideDownWindow(i);         // in main.js
+                return;
             } 
             // If chosen a media button
             else {
                 CleanUp();
                 MediaButsEvent(i - 3);
+                return;
             }
         }
     }
@@ -154,23 +161,29 @@ function PrintOutPearson(item, coeX, coeY) {
     console.log(item + '.X: ' + coeX + '   ; ' + item + '.Y: ' + coeY);
 }
 
+
+/* 
+ * Delete all the used memory and assign a time slot for the next tracking. 
+ */
 function CleanUp() {
-    // Clean up the menu buffer
-//    for (let i = 0; i < num_item_for_tracking; i++) {
-//        while (menu_icon_posX_arr[i].length > 0) {
-//            menu_icon_posX_arr[i].pop();
-//            menu_icon_posY_arr[i].pop();
-//        }
-//    }
-//
-//    // Clean up the mouse buffer | the gesture pos buffer
-//     while (mouse_arrX.length > 0) {
-//        mouse_arrX.pop();
-//        mouse_arrY.pop();
-//    }
-//
-    // Update the slack_slot 
+    for (let i = 0; i < menu_icon_posX_arr.length; i++) {
+        CleanUpArray(menu_icon_posX_arr[i]);
+        CleanUpArray(menu_icon_posY_arr[i]);
+    } 
+  
+    CleanUpArray(mouse_arrX);
+    CleanUpArray(mouse_arrY);
+    CleanUpArray(mouse_arrX2);
+    CleanUpArray(mouse_arrY2);
+    
+    // Introduce the slot for the next tracking  
     slack_slot = 3;
+}
+
+function CleanUpArray(arr) {
+    while (arr.length > 0) {
+        arr.pop();
+    }
 }
 
 function InitMediaButsPos() {

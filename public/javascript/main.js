@@ -7,6 +7,7 @@ function Init() {
     UpdateTime();
     setInterval('UpdateSec()', 1000);
     setInterval('UpdateWeather()', 600000);
+    InitAppMenu(); 
     InitPoseNet(); 
     setTimeout(SetInitForPearson(), 2000);
 }
@@ -16,10 +17,67 @@ function InitInterface() {
     UpdateWeather();
     InitTime();
     UpdateTime();
+    InitAppMenu();
+    
     setInterval('UpdateSec()', 1000);
     setInterval('UpdateWeather()', 600000);
 }
 
+// The Init function for testing the tutorial only => won't load any apps-modle
+function InitTutorial() {
+    UpdateWeather();
+    InitTime();
+    UpdateTime();
+    setInterval('UpdateSec()', 1000);
+    setInterval('UpdateWeather()', 600000);
+
+    InitTutObjects();
+    InitPoseNet(); 
+    setTimeout(SetInitForPearson(), 2000);
+}
+
+// This will initialise the DOM for the tutorial:
+function InitTutObjects() {
+    tutStatus = true;
+    InitTutCanvas();
+}
+
+// This is for the demo purpose
+function InitDemo() {
+    InitTutObjects();
+    InitPoseNet(); 
+    setTimeout(SetInitForPearson(), 2000);
+
+}
+
+
+// This will Initialise the menu DOM and call the InitMenuCanvas() in motion.js
+function InitAppMenu() {
+    let app = document.getElementById('app-bar');
+    const appBarHTML = '<div id="glasses-div" onclick="SlideDownWindow(0)"> </div> '
+                    + '<div id="media-div" onclick="SlideDownWindow(1)"> </div>'
+                    + '<div id="screenshot-div" onclick="SlideDownWindow(2)"> </div>'
+                    + '<div id="dropDownWindow"> </div>';
+
+    app.innerHTML = appBarHTML;
+
+    InitMenuCanvas();
+}
+
+
+// The function is called when the user finish the tutorial, 
+// then the function will Clean up the tut-div from app-bar and call the InitAppMenu()
+function FinishedTut() {
+    tutStatus = false;
+    let app = document.getElementById('app-bar');
+    deleteChild(app);
+    DestroyTut();
+
+    // Hide the poseNet
+    HidePoseNet();
+    // Then it should start the AppMenu
+    InitAppMenu();
+}
 
 function UpdateWeather() {
     !function(d,s,id) {
@@ -89,3 +147,12 @@ function SlideDownWindow(type) {
     console.log('Switch Type: ', type);
 }
 
+
+// Delete all the child nodes/HTML objects from the given div
+function deleteChild(div) {
+    var child = div.lastElementChild;
+    while (child) {
+        div.removeChild(child);
+        child = div.lastElementChild;
+    }
+}

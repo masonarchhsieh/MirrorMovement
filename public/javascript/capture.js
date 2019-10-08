@@ -6,11 +6,24 @@ function takeASnap(vid) {
     canvas.height = vid.videoHeight;
     
     ctx.drawImage(vid, 0, 0); // the video
+    
+    var dataURL = canvas.toDataURL('image/jpeg');
+    $.ajax({
+        type: "POST",
+        url: '/uploadImg64',
+        data: {
+            imgBase64: dataURL
+        }
+    }).done(function() {
+        console.log('saved');
+    });
+
     return new Promise((res, rej) => {
         canvas.toBlob(res, 'image/jpeg');   // request a blob from the canvas
     });
 }
 
+// This will download the blob from a pop-up link
 function download(blob) {
     let a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
@@ -22,8 +35,6 @@ function download(blob) {
     window.URL.revokeObjectURL(a.href);
     document.body.removeChild(a);
 }
-
-
 // End here
 
 let timerStatus = 0; 
@@ -34,15 +45,16 @@ function countDownTimer() {
     console.log(counter);
     if (counter == 0) {
         clearInterval(timerStatus);
-        takeASnap(video).then(download);
+        //takeASnap(video).then(download);
+        takeASnap(video);
+        
         destroyCenterWindow();
         timerStatus = 0;
     } else {
         counter--;
         updateCounter();
     }
-}
-
+} 
 // These functions for capture image from the webcam
 function callSnapShot() {
     counter = 3;
@@ -69,7 +81,6 @@ function CreateCenterWindow() {
 
 function destroyCenterWindow() {
     centerWindow.remove();
-    
 }
 
 function getScreenShotStatus() {

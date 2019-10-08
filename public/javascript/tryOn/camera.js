@@ -286,7 +286,7 @@ var object = {
 function InitFaceDetection() {
     CreateCenterWindow();           // call from capture.js
     centerWindow.innerHTML =  '<div id="tryon">'
-                            + '<video id="camera" loop></video>'
+                            + '<video id="camera" width="800" height="800" loop></video>'
                             + '<canvas id="overlay"></canvas>'
                             + '</div>'
                             //+ '<button id="start">Start</button>'

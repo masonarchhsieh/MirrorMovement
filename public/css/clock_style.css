@@ -1,9 +1,9 @@
 .clockCircle {
   margin: 0 auto;
   position: relative;
-  font-size: 35px;
+  font-size: 37px;
   font-weight: bold;
-  color: #9b9a9c;
+  color: #c0bec2;
   border-radius: 50%;
   background-size: 100%;
 }
@@ -52,7 +52,7 @@
   font-weight: lighter;  
   top: -30px;
   left: 290px;
-  color: #79787a;
+  color: #b9b8ba;
 }
 
 .clockAP {
@@ -63,5 +63,5 @@
   font-weight: lighter;  
   top: 0px;
   left: 350px;
-  color: 'white';
+  color: white;
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Demo </title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/clock_style.css">
+        <link rel="stylesheet" href="css/player.css">
+        <link rel="stylesheet" href="css/camera.css">
+        <script type="text/javascript" src="javascript/creative.js"> </script>
+        <script type="text/javascript" src="javascript/main.js"> </script>
+        <script type="text/javascript" src="javascript/pearson.js"> </script>
+        <script type="text/javascript" src="javascript/time.js"> </script>
+        <script type="text/javascript" src="javascript/capture.js"> </script>
+
+    </head>
+
+    <body onload="InitDemo()">
+        <div id="app-bar" class="apps">
+            <div id="tut-div" onclick="FinishedTut()"> </div>
+            <p> Please follow the movement of the little dot </p>
+        </div> 
+      
+        <script type="text/javascript" src="javascript/motion.js"> </script>
+        <script type="text/javascript" src="javascript/tutorial.js"> </script>
+       <!-- Scripts for PoseNet, using tensorflow/tfjs -->
+        <script src="https://cdn.jsdelivr.net/npm/dat.gui@0.7.2/build/dat.gui.js"></script>
+        <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+        <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
+        <script type="text/javascript" src="javascript/poseNet/demo_util.js"></script>
+        <script type="text/javascript" src="javascript/poseNet/stats.min.js "></script>
+        <script type="text/javascript" src="javascript/poseNet/camera.js"></script>
+        
+
+    </body>
+</html>    

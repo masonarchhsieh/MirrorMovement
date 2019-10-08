@@ -45,7 +45,6 @@ div {
     width: 80%;
     font-size: 50px;
     font-weight: bold;  
-    background: #222;
     color: 'white';
     text-align: center;
 }
@@ -63,7 +62,7 @@ img {
     padding:10px;
 }
 
-#glasses-div {
+#glasses-div, #tut-div {
     width: 140px;
     height: 140px;
     float: left;
@@ -98,4 +97,8 @@ img {
     font-size: 50px;
     line-height: 480px;
     text-align: center;
+}
+
+canvas {
+    //background-color: #222;
 }

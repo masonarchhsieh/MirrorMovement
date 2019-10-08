@@ -19,7 +19,74 @@ app.get('/', function(req, res, next) {
 });
 
 // for Upload the image
-app.use('/upload', router);
+//app.use('/upload', router);
+
+const multer = require('multer');
+const ejs = require('ejs');
+// Set the Storage Engine
+const storage = multer.diskStorage({
+    destination: './public/picture/',
+    filename: function(req, file, cb){
+        cb(null,'screenshot.jpg');
+    }
+});
+
+// Init upload
+const upload = multer({
+    storage: storage,
+    limits: {fileSize: 1000000},
+    fileFilter: function(req, file, cb) {
+        checkFileType(file, cb);
+    }
+}).single('myImage');
+
+// Check File Type
+function checkFileType(file, cb) {
+    // Allowed ext
+    const filetypes = /jpeg|jpg|png|gif/;
+    // Check ext
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    // Check mime
+    const mimetype = filetypes.test(file.mimetype);
+
+    if (mimetype && extname) {
+        return cb(null, true);
+    } else {
+        cb('Error: Images only');
+    }
+}
+
+app.post('/upload', (req, res) => {
+    upload(req, res, (err) => {
+        if (err) {
+            res.send(err);
+            console.log(err);
+        } else {
+            if (req.file == undefined) {
+                res.send('Error: No File Selected!');
+                console.log('Error: No file Selected!');
+            } else {
+                // Success
+                res.send('success');
+                console.log('Success');
+            }
+        }
+    });
+});
+
+const fs = require('fs');
+
+app.post('/uploadImg64', (req, res) => {
+    var data = req.body.imgBase64.replace(/^data:image\/\w+;base64,/, "");
+    //var imageBuffer = new Buffer.from(req.body.imgBase64, 'base64');
+    var imageBuffer = new Buffer(data, 'base64');
+    fs.writeFile('./public/picture/screenshot.jpg', imageBuffer, function(err) {
+        if (err) return next (err);
+
+        res.send('Success saved');
+    });
+
+});
 
 const argv = require('yargs').argv;
 const request = require('request');
