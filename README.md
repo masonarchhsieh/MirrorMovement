@@ -18,3 +18,19 @@ npm install
 ```
 npm start
 ```
+
+<br>
+<p>
+  Open the browser and enter:
+</p>
+```
+localhost:3000/
+```
+<p>
+  The screenshot will be stored as ./public/picture/screenshot.jpg in the project folder. 
+  You can open the screenshot from the following page:
+</p>
+```
+localhost:3000/screenshot.html
+```
+
