@@ -1,11 +1,11 @@
 // Store global variables
 var menuCanvas = [];
-let bkColor = '#222';                   // background color: #222
+let bkColor = 'black';                   // background color: #222
 const menuCanvasName = ['canvas0', 'canvas1', 'canvas2'];
 const menuCanvasID = ['glasses-div', 'media-div', 'screenshot-div'];
 const menuCanvasColor = ['#d4faf6', '#d4faf6', '#d4faf6'];
 var number_of_canvas = 3;
-var iconSizeX = iconSizeY = 140;
+var iconSizeX = iconSizeY = 130;
 var menu_canvas_status = -1;            // menu_canvas_status: -1: none, 0: tutorial,  1: main
 
 // Initialise canvas for drawing icons on apps-bar
@@ -56,7 +56,7 @@ function refreshCanvas(icon_w, icon_h) {
         if (!balls[i].running) 
             menuCanvas[i].drawImage(menuCanvasImg[i], icon_w/2 - 64, icon_h/2 - 64);
         else
-            menuCanvas[i].drawImage(closeImg, icon_w/2 - 64, icon_h/2 - 64);
+            menuCanvas[i].drawImage(closeImg, icon_w/2 - 49, icon_h/2 - 64);
     }
    
 }
@@ -84,7 +84,7 @@ function addMenuBall(i){
         y: 0,
         strength: 0,
         speed: 2.5,
-        size: 15,
+        size: 12,
         angle: initMenuAngle[i],
         running: false
     }
@@ -94,7 +94,7 @@ function addMenuBall(i){
 function draw() {
     switch (menu_canvas_status) { 
         case 1: {
-            refreshCanvas(140, 140);
+            refreshCanvas(iconSizeX, iconSizeY);
             //moveBall();
             //drawBall();
             
@@ -173,7 +173,7 @@ function drawSquare() {
 
 
 var squares = [];
-const boundSqu = 10, squLen = 120;
+const boundSqu = 10, squLen = 110;
 const initSqrX = [boundSqu, boundSqu + squLen, boundSqu + squLen];
 const initSqrY = [boundSqu, boundSqu, boundSqu + squLen];
 // For adding the square to the canvas
@@ -192,10 +192,18 @@ function addSquare(i) {
 }
 
 function moveSquare(i) {
+    // Check whether the program is currently running i-th app
     //if (!balls[i].running) 
-        ClockWiseSquare(balls[i]);
+    //    ClockWiseSquare(balls[i]);
     //else
     //    CounterClockWiseSquare(balls[i]);
+    
+
+    if (i % 2 == 0) 
+        ClockWiseSquare(balls[i]);
+    else
+        CounterClockWiseSquare(balls[i]);
+
 }
 
 function ClockWiseSquare(squ) {

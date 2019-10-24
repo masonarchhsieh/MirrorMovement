@@ -7,9 +7,9 @@ html, body{
 /** reset padding of body **/
 body {
     padding: 0;
-    width: 1125px;
+    width: 1080px;
     height: 1920px;
-    background-color: #222;
+    background-color: black;
 }
 
 div {
@@ -29,7 +29,7 @@ div {
 
 #weather {
     width: 255px;
-    height: 350px;
+    height: 550px;
     float: left;
 }
 
@@ -52,8 +52,9 @@ div {
 
 /* Apps: menu-bar, Gmail, Messenger, Media Player, Camera */
 .apps {
-    top: 50px;
-    width: 430px;
+    position: relative;
+    top: 20px;
+    width: 395px;
     height: 40%;
     float: right;
 }
@@ -63,20 +64,20 @@ img {
 }
 
 #glasses-div, #tut-div {
-    width: 140px;
-    height: 140px;
+    width: 130px;
+    height: 150px;
     float: left;
 }
 
 #media-div {
-    width: 140px;
-    height: 140px;
+    width: 130px;
+    height: 150px;
     float: left;
 }
 
 #screenshot-div {
-    width: 140px;
-    height: 140px;
+    width: 130px;
+    height: 150px;
     float: left;
 }
 

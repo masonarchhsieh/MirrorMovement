@@ -2,17 +2,10 @@
  * Requires:
  * three.js (r54) http://threejs.org/
  * clmtrack https://github.com/auduno/clmtrackr
- *
- * @author Yevhen Matasar <matasar.ei@gmail.com>
- *
- * @param {Object} params
- *
- * @version 20190615
  */
 
 var camera_status = 0;
-let videoWidth = 640, videoHeight = 480;
-
+let videoWidth = 800, videoHeight = 600;
 
 var TryOnFace = function (params) {
     var ref = this;
@@ -317,10 +310,8 @@ function InitFaceDetection() {
         }
     });
 
-    //$('#start').click(function() {
     camera_status = 1;
     tryOn.start();
-    //});
 }
 
 function RemoveFaceCamera() {

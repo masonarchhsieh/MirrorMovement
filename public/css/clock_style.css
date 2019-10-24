@@ -3,7 +3,7 @@
   position: relative;
   font-size: 37px;
   font-weight: bold;
-  color: #c0bec2;
+  color: #d6d6d6;
   border-radius: 50%;
   background-size: 100%;
 }
@@ -36,7 +36,7 @@
   padding: 2px 0 2px 25%;     /* indicator length & thickness */
   font-size: 90px;
   font-weight: normal;  
-  background: #222;
+  background: black;
   color: 'white';
   -webkit-transform-origin: 100% 50%;
   -ms-transform-origin: 100% 50%;
@@ -52,7 +52,7 @@
   font-weight: lighter;  
   top: -30px;
   left: 290px;
-  color: #b9b8ba;
+  color: #d6d6d6;
 }
 
 .clockAP {

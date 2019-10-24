@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title> Smart Mirror </title>
-        <meta charset="utf-8">
+        <title>PoseNet - Camera Feed Demo</title>
+        <style>
+        @media only screen and (max-width: 600px) {
+          .footer-text, .dg {
+            display: none;
+          }
+        }
+        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/camera.css">
         <link rel="stylesheet" href="css/clock_style.css">
         <link rel="stylesheet" href="css/player.css">
-        <link rel="stylesheet" href="css/camera.css">
         <script type="text/javascript" src="javascript/creative.js"> </script>
+        <script type="text/javascript" src="javascript/capture.js"> </script>
         <script type="text/javascript" src="javascript/main.js"> </script>
         <script type="text/javascript" src="javascript/pearson.js"> </script>
         <script type="text/javascript" src="javascript/time.js"> </script>
-
+         
     </head>
-    
 
-    <body onload="Init()">
+    <body onload="InitTutorial()">
         <div id="weather">
-            <a class="weatherwidget-io" href="https://forecast7.com/en/n37d81144d96/melbourne/" data-label_1="MELBOURNE" data-label_2="WEATHER" data-font="Ubuntu" data-icons="Climacons" data-days="3" data-theme="dark" >MELBOURNE WEATHER</a>
-    <script>
-        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
-    </script>
+                <a class="weatherwidget-io" href="https://forecast7.com/en/n37d81144d96/melbourne/" data-label_1="MELBOURNE" data-label_2="WEATHER" data-font="Ubuntu" data-icons="Climacons" data-days="3" data-theme="dark" >MELBOURNE WEATHER</a>
         </div>
 
         <div id="clock" class="clock">
@@ -29,33 +34,36 @@
             <p id="clockSec" class="clockSecond"> sec </p>
             <p id="clockAP" class="clockAP"> am/pm </p>
         </div>
-        
+       
         <div id="app-bar" class="apps">
-            <div id="glasses-div" onclick="SlideDownWindow(0)"> 
-            </div>
-            <div id="media-div" onclick="SlideDownWindow(1)">
-            </div>
-            <div id="screenshot-div" onclick="SlideDownWindow(2)">
-            </div>
-            <div id="dropDownWindow">       
-            </div>
-        </div>
-
-      
+            <div id="tut-div" onclick="FinishedTut()"> </div>
+            <p> Please follow the movement of the little dot </p>
+        </div> 
+         
+        <script type="text/javascript" src="javascript/tutorial.js"> </script>
         <script type="text/javascript" src="javascript/motion.js"> </script>
         <script type="text/javascript" src="javascript/player.js"> </script>
         <script type="text/javascript" src="javascript/playerMotion.js"> </script>
 
 
+        <!-- Scripts for PoseNet, using tensorflow/tfjs -->
+        <script src="https://cdn.jsdelivr.net/npm/dat.gui@0.7.2/build/dat.gui.js"></script>
+        <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+        <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
+        <script type="text/javascript" src="javascript/poseNet/demo_util.js"></script>
+        <script type="text/javascript" src="javascript/poseNet/stats.min.js "></script>
+        <script type="text/javascript" src="javascript/poseNet/camera.js"></script>
+        
+
         <!-- Scripts for virtual glass fitting -->
         <!-- jquery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <!-- three.js r54 -->
-        <script type="text/javascript" src="javascript/three.js"></script>
+        <script type="text/javascript" src="javascript/tryOn/three.js"></script>
         <!-- clmtrack -->
-        <script type="text/javascript" src="javascript/utils.js"></script>
-        <script type="text/javascript" src="javascript/clmtrackr.js"></script>
-        <script type="text/javascript" src="javascript/camera.js"> </script>
+        <script type="text/javascript" src="javascript/tryOn/utils.js"></script>
+        <script type="text/javascript" src="javascript/tryOn/clmtrackr.js"></script>
+        <script type="text/javascript" src="javascript/tryOn/camera.js"> </script>
+      
     </body>
-
 </html>

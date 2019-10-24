@@ -15,8 +15,8 @@
  * =============================================================================
  */
 const maxVideoSize = 513;
-const maxVideoSizeX = 640, maxVideoSizeY = 480;
-const canvasSize = 600;
+const maxVideoSizeX = 800, maxVideoSizeY = 600;
+const canvasSize = 800;
 const stats = new Stats();
 
 function isAndroid() {
@@ -38,8 +38,8 @@ function isMobile() {
 var video;
 async function setupCamera() {
   video = document.getElementById('video');
-  video.width = maxVideoSize;
-  video.height = maxVideoSize;
+  video.width = maxVideoSizeX;
+  video.height = maxVideoSizeY;
 
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     const mobile = isMobile();
@@ -47,8 +47,8 @@ async function setupCamera() {
       'audio': false,
       'video': {
         facingMode: 'user',
-        width: mobile ? undefined : maxVideoSizeY,
-        height: mobile ? undefined: maxVideoSizeX}
+        width: mobile ? undefined : maxVideoSizeX,
+        height: mobile ? undefined: maxVideoSizeY}
     });
     video.srcObject = stream;
 
@@ -112,7 +112,7 @@ function setupGui(cameras, net) {
     return result
   }, {});
 
-  const gui = new dat.GUI({ width: 300 });
+  const gui = new dat.GUI({ width: 200 });
 
   // The single-pose algorithm is faster and simpler but requires only one person to be
   // in the frame or results will be innaccurate. Multi-pose works for more than 1 person
@@ -176,6 +176,8 @@ function setupGui(cameras, net) {
         break;
     }
   });
+
+  gui.close();
 }
 
 /**
@@ -227,7 +229,7 @@ function detectPoseInRealTime(video, net) {
         
         // flip the x-cord
         for (let i=0; i<pose.keypoints.length; i++) {
-            pose.keypoints[i].position.x = maxVideoSize - pose.keypoints[i].position.x;
+            pose.keypoints[i].position.x = maxVideoSizeX - pose.keypoints[i].position.x;
 
             if (i == 9) {
                 leftWristPos[0] = pose.keypoints[i].position.x;
@@ -252,7 +254,7 @@ function detectPoseInRealTime(video, net) {
           guiState.multiPoseDetection.nmsRadius);
          // flip the x-cord
         for (let i=0; i<pose.keypoints.length; i++) {
-            pose.keypoints[i].position.x = maxVideoSize - pose.keypoints[i].position.x;
+            pose.keypoints[i].position.x = maxVideoSizeX - pose.keypoints[i].position.x;
         }
         
         minPoseConfidence = Number(guiState.multiPoseDetection.minPoseConfidence);
