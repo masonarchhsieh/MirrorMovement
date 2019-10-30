@@ -49,7 +49,7 @@ function make_media_base() {
 }
 
 function refreshMediaCanvas() {
-    mediaCanvas.drawImage(song_cover, mediaCanvas_sizeX/2 - 200, mediaCanvas_sizeY/2 - 150);
+    mediaCanvas.drawImage(song_cover, mediaCanvas_sizeX/2 - 220, mediaCanvas_sizeY/2 - 150, 430, 350);
 }
 
 var media_PlayStop_radius = 128;

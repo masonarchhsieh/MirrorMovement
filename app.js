@@ -16,6 +16,33 @@ app.get('/', function(req, res, next) {
     res.render('index');
 });
 
+// Create databse
+var mongoose = require('mongoose');
+const dbURI = "mongodb+srv://masonHsieh123:Password123@cluster0-ivkk2.mongodb.net/";
+const options = {
+    useNewUrlParser: true,
+    dbName: "MirrorMovement"
+};
+
+// const conn = mongoose.createConnection(dbURI, options).then(
+//     () => {
+//         console.log("Database connection established!");
+//     }, 
+//     err => {
+//         console.log("Error connecting Database instance due to: ", err);
+//     } 
+// );
+// 
+// var Schema = mongoose.Schema;
+// var ImageSchema = new Schema({
+//     img: { data: Buffer, contentType: String } 
+// });
+// 
+// var A = mongoose.model('A', ImageSchema);
+// 
+// 
+
+
 const fs = require('fs');
 
 app.post('/uploadImg64', (req, res) => {

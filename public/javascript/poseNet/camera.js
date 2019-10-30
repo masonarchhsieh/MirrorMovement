@@ -230,7 +230,7 @@ function detectPoseInRealTime(video, net) {
         // flip the x-cord
         for (let i=0; i<pose.keypoints.length; i++) {
             pose.keypoints[i].position.x = maxVideoSizeX - pose.keypoints[i].position.x;
-
+            
             if (i == 9) {
                 leftWristPos[0] = pose.keypoints[i].position.x;
                 leftWristPos[1] = pose.keypoints[i].position.y;
@@ -238,7 +238,7 @@ function detectPoseInRealTime(video, net) {
                 rightWristPos[0] = pose.keypoints[i].position.x;
                 rightWristPos[1] = pose.keypoints[i].position.y;
             }
-       }
+        }
         
         poses.push(pose);
            

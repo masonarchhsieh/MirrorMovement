@@ -3,16 +3,16 @@ var mouse_arrX = [], mouse_arrY = [];
 var mouse_arrX2 = [], mouse_arrY2 = [];
 var menu_icon_posX_arr = new Array();
 var menu_icon_posY_arr = new Array();
-var buf_size = 80;                          // Compare a subsequent 100 positions
-var min_size_for_tracking = 40;             // minimum size of window to compare: 30, at least it needs to follow the target
+var buf_size = 60;                          // Compare a subsequent 100 positions
+var min_size_for_tracking = 30;             // minimum size of window to compare: 30, at least it needs to follow the target
                                             // for 1 secs...
 var num_item_for_tracking = 0;
 let locker = false;
 // MotionStatus determines the motion status
 // 0: No event.  1: Open Virtual glasses, 2: Open Media player. 3: Open Camera 
 var MotionStatus = 0, PrevMotionStatus = 0;
-const threshold = 0.87;                     // The threshold value for determining the motion
-var slack_slot = 4;             
+const threshold = 0.80;                     // The threshold value for determining the motion
+var slack_slot = 3;             
 
 InitIconArr();
 function InitIconArr() {
@@ -210,5 +210,5 @@ function ExitFromMedia() {
 // Consider: 30hz for fetching images from the camera...
 function SetInitForPearson() {
     setInterval('UpdatePos()', 50);         // Collect 20 frames/sec
-    setInterval('Tracking()', 500);         // Calling the tracking every .4 secs;
+    setInterval('Tracking()', 500);         // Calling the tracking every .4 secs
 }
