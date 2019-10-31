@@ -15,8 +15,8 @@
  * =============================================================================
  */
 const maxVideoSize = 513;
-const maxVideoSizeX = 800, maxVideoSizeY = 600;
-const canvasSize = 800;
+const maxVideoSizeX = 513, maxVideoSizeY = 513;
+const canvasSize = 513;
 const stats = new Stats();
 
 function isAndroid() {

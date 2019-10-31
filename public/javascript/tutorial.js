@@ -1,12 +1,12 @@
 const tutCanvasName = 'tutCanvas';
 const tutCanvasId = 'tut-div';
-const tutColor = '#fc3903';
+const tutColor = '#03d7fc';
 var tutStatus = false;
 var canvas0;
 
 function InitTutCanvas() {
     menu_canvas_status = 0;
-    canvas0 = createCanvas('canvas0', 'tut-div', 140, 140);
+    canvas0 = createCanvas('canvas0', 'tut-div', 130, 130);
     addTutBall();
 }
 
@@ -24,7 +24,7 @@ function refreshTutCanvas(icon_w, icon_h) {
 }
 
 function drawTutCanvas() {
-    refreshTutCanvas(140, 140);
+    refreshTutCanvas(130, 130);
     moveBall();
 
     // draw the ball on the canvas
